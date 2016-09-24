@@ -78,6 +78,20 @@ $( document ).ready(function() {
         $(this).attr("href", href.replace(/\.md$/, ".html"));
     });
 
+    // GFM checkboxes
+    content.find("li").each(function() {
+        var text = $(this).text();
+        if (!text.match(/^\[ \]\s+/)) {
+            return;
+        }
+        var html = $(this).html();
+        $(this).replaceWith(
+            "<div>" +
+            "<input type='checkbox' onclick='return false' style='margin-right: 0.75rem'>" +
+            html.replace(/^\[ \]\s+/, "") +
+            "</div>");
+    });
+
 
     // Toggle sidebar
     $("#sidebar-toggle").click(function(event){

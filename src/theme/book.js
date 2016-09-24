@@ -52,15 +52,30 @@ $( document ).ready(function() {
     var content = $("#content");
 
 
-    // Add anchors for all content headers
-    content.find("h1, h2, h3, h4, h5").wrap(function(){
+    // Add GitHub compatible anchors for all content headers
+    content.find("h1, h2, h3, h4, h5").before(function(){
         var wrapper = $("<a class=\"header\">");
-        wrapper.attr("name", $(this).text());
-        // Add so that when you click the link actually shows up in the url bar...
-        // Remove any existing anchor then append the new one
-        // ensuring eg. no spaces are present within it ie. they become %20
-        wrapper.attr("href", $(location).attr('href').split("#")[0] + "#" + encodeURIComponent($(this).text().trim()) );
+        var anchor = $(this).text()
+            .trim()
+            .toLowerCase()
+            .replace(/\s/g, '-')
+            .replace(/[\:\.!\"]/g, '');
+        anchor = encodeURIComponent(anchor);
+        wrapper.attr("name", anchor);
         return wrapper;
+    });
+
+    // Replace local references to .md with .html
+    content.find("a").each(function() {
+        var href = $(this).attr("href");
+        if (!href || href.length === 0) {
+            return;
+        }
+        // Skip absolute URLs
+        if (href.match(/^[a-z]+:\/\//i)) {
+            return;
+        }
+        $(this).attr("href", href.replace(/\.md$/, ".html"));
     });
 
 

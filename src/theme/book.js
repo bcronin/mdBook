@@ -81,14 +81,17 @@ $( document ).ready(function() {
     // GFM checkboxes
     content.find("li").each(function() {
         var text = $(this).text();
-        if (!text.match(/^\[ \]\s+/)) {
+        var regExp = /^\[([x ])\]\s+/i;
+        var m = text.match(regExp);
+        if (!m) {
             return;
         }
+        var checked = (m[1].toLowerCase() === 'x') ? "checked" : "";
         var html = $(this).html();
         $(this).replaceWith(
             "<div>" +
-            "<input type='checkbox' onclick='return false' style='margin-right: 0.75rem'>" +
-            html.replace(/^\[ \]\s+/, "") +
+            "<input type='checkbox' onclick='return false' " + checked + " style='margin-left: -1.25rem; margin-right: 0.75rem'>" +
+            html.replace(regExp, "") +
             "</div>");
     });
 

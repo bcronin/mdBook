@@ -1,3 +1,7 @@
+### *Notes about this fork of mdbook*
+
+*This is a fork of https://github.com/azerupi/mdBook loosely aimed at providing a proper superset of GitHub's markdown support (e.g. compatible links, link anchors, GFM checkboxes, automatic link generation, etc.).*
+
 # mdBook
 
 <table>
